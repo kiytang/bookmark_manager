@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Bookmark manager</title>
+  <title>Bookmark manager</title>
+  <link rel="stylesheet" type="text/css" href="/css/reset.css">  
   <link rel="stylesheet" type="text/css" href="/css/application.css">  
 </head>
 <body>
-  <% if current_user %>
-    Welcome, <%= current_user.email %>
-  <% end %>
-
-
-  <% if flash[:errors] && !flash[:errors].empty? %>
-     sorry, there were the following problems with the form.
-     <ul id="errors">
-     	<% flash[:errors].each do |error| %>
-     	  <li><%= error %></li>
-     	<% end %>
-     </ul>
-  <% end %>   	
+  <%= partial :header %>
+  <%= partial :flash %>
   <%= yield %>
+  <%= partial :footer %>
 </body>
 </html>
