@@ -17,14 +17,15 @@ post '/users' do
   # let's try saving it,
   # if the model is valid,
   # it will be saved
-  if @user.save
-    session[:user_id] = @user.id
-    redirect to ('/')
+      if @user.save
+      session[:user_id] = @user.id
+      redirect to ('/')
     # if it's not valid,
     # we'll show the same
     # form again
-  else
-  	flash.now[:errors] = @user.errors.full_messages
-    erb :"users/new"
-  end
+  
+      else
+  	    flash.now[:errors] = @user.errors.full_messages
+        erb :"users/new"
+      end
 end
