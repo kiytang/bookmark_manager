@@ -23,21 +23,12 @@ feature "User signs in" do
     expect(page).not_to have_content("Welcome, test@test.com")
   end
 
-  def sign_in(email, password)
-    visit '/sessions/new'
-    fill_in 'email', :with => email
-    fill_in 'password', :with => password
-    click_button 'Sign in'
-  end
-
 end
 
 feature 'User signs out' do
 
   before(:each) do
-    User.create(:email => "test@test.com", 
-                :password => 'test', 
-                :password_confirmation => 'test')
+    User.create(:email => "test@test.com", :password => 'test', :password_confirmation => 'test')
   end
 
   scenario 'while being signed in' do
@@ -50,7 +41,7 @@ feature 'User signs out' do
 end
 
 feature "User signs up" do
- 
+
   # Strictly speaking, the tests that check the UI 
   # (have_content, etc.) should be separate from the tests 
   # that check what we have in the DB. The reason is that 
@@ -59,9 +50,8 @@ feature "User signs up" do
   # the business logic and the views.
   #
   # However, let's not worry about this yet 
-  # to keep the example simple.
+  # to keep the examples simple.
 
-  
   scenario "when being logged out" do    
     lambda { sign_up }.should change(User, :count).by(1)    
     expect(page).to have_content("Welcome, alice@example.com")
@@ -69,12 +59,12 @@ feature "User signs up" do
   end
 
   scenario "with a password that doesn't match" do
-    lambda { sign_up('a@a.com', 'pass', 'wrong') }.should change(User, :count).by(0)    
-      expect(current_path).to eq('/users')   
-      expect(page).to have_content("Sorry, your passwords don't match")
+    lambda { sign_up('a@a.com', 'pass', 'wrong') }.should change(User, :count).by(0) 
+    expect(current_path).to eq('/users')   
+    expect(page).to have_content("Sorry, your passwords don't match")
   end
 
-   scenario "with an email that is already registered" do    
+  scenario "with an email that is already registered" do    
     lambda { sign_up }.should change(User, :count).by(1)
     lambda { sign_up }.should change(User, :count).by(0)
     expect(page).to have_content("This email is already taken")
